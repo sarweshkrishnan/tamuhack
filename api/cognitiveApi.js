@@ -27,75 +27,83 @@ let path = '/text/analytics/v2.0/keyPhrases';
 let SUBSCRIPTION_WEBSEARCH_KEY = '1765443c4eb3423dad32655c6fe7250b';
 
 module.exports = {
-    // bingsearch: function(req, res, query){
-    //     https.get({
-    //         hostname: 'api.cognitive.microsoft.com',
-    //         path:     '/bing/v7.0/search?q=' + encodeURIComponent(query),
-    //         headers:  { 'Ocp-Apim-Subscription-Key': SUBSCRIPTION_WEBSEARCH_KEY },
-    //       }, res => {
-    //         let body = ''
-    //         res.on('data', part => body += part)
-    //         res.on('end', () => {
-    //           for (var header in res.headers) {
-    //             if (header.startsWith("bingapis-") || header.startsWith("x-msedge-")) {
-    //               console.log(header + ": " + res.headers[header])
-    //             }
-    //           }
-    //           console.log('\nJSON Response:\n')
-    //           console.dir(JSON.parse(body), { colors: false, depth: null })
-    //         })
-    //         res.on('error', e => {
-    //           console.log('Error: ' + e.message)
-    //           throw e
-    //         })
-    //       })
-    // },
-    // bingsearchloop: function(req, res, str_arr){
-    //     var urls = ['http://adrianmejia.com/atom.xml', 'http://twitrss.me/twitter_user_to_rss/?user=amejiarosario'];
-    //     var completed_requests = 0;
+    bingsearch: function(req, res, query){
+        https.get({
+            hostname: 'api.cognitive.microsoft.com',
+            path:     '/bing/v7.0/search?q=' + encodeURIComponent(query),
+            headers:  { 'Ocp-Apim-Subscription-Key': SUBSCRIPTION_WEBSEARCH_KEY },
+          }, res => {
+            let body = ''
+            res.on('data', part => body += part)
+            res.on('end', () => {
+              for (var header in res.headers) {
+                if (header.startsWith("bingapis-") || header.startsWith("x-msedge-")) {
+                  console.log(header + ": " + res.headers[header])
+                }
+              }
+              console.log('\nJSON Response:\n')
+              console.dir(JSON.parse(body), { colors: false, depth: null })
+            })
+            res.on('error', e => {
+              console.log('Error: ' + e.message)
+              throw e
+            })
+          })
+    },
+    bingsearchloop: function(req, res, str_arr){
+        var urls = ['http://adrianmejia.com/atom.xml', 'http://twitrss.me/twitter_user_to_rss/?user=amejiarosario'];
+        var completed_requests = 0;
+        str_arr = str_arr.slice(0,4);
 
-    //     str_arr.forEach(function(str_arr) {
+        var result = [];
+        str_arr.forEach(function(str) {
+            var responses = [];
+            // http.get(url, function(res) {
+            //     res.on('data', function(chunk){
+            //     responses.push(chunk);
+            //     });
 
-    //     var responses = [];
+            //     res.on('end', function(){
+            //     if (completed_requests++ == urls.length - 1) {
+            //         // All downloads are completed
+            //         console.log('body:', responses.join());
+            //     }      
+            //     });
+            // });
 
-    //     http.get(url, function(res) {
-    //         res.on('data', function(chunk){
-    //         responses.push(chunk);
-    //         });
+            https.get({
+                hostname: 'api.cognitive.microsoft.com',
+                path:     '/bing/v7.0/search?q=' + encodeURIComponent(str),
+                headers:  { 'Ocp-Apim-Subscription-Key': SUBSCRIPTION_WEBSEARCH_KEY },
+            }, res => {
+                let body = ''
+                res.on('data', part => {body += part; responses.push(body);})
+                res.on('end', () => {
+                    if (completed_requests++ == str_arr.length - 1) {
+                        
+                        // All downloads are completed
+                        for (var header in res.headers) {
+                            if (header.startsWith("bingapis-") || header.startsWith("x-msedge-")) {
+                            console.log(header + ": " + res.headers[header])
+                            }
+                        }
+                        console.log('\nJSON Response:\n')
+                        console.dir(JSON.parse(body), { colors: false, depth: null })
 
-    //         res.on('end', function(){
-    //         if (completed_requests++ == urls.length - 1) {
-    //             // All downloads are completed
-    //             console.log('body:', responses.join());
-    //         }      
-    //         });
-    //     });
-
-    //     https.get({
-    //         hostname: 'api.cognitive.microsoft.com',
-    //         path:     '/bing/v7.0/search?q=' + encodeURIComponent(query),
-    //         headers:  { 'Ocp-Apim-Subscription-Key': SUBSCRIPTION_WEBSEARCH_KEY },
-    //       }, res => {
-    //         let body = ''
-    //         res.on('data', part => body += part)
-    //         res.on('end', () => {
-    //           for (var header in res.headers) {
-    //             if (header.startsWith("bingapis-") || header.startsWith("x-msedge-")) {
-    //               console.log(header + ": " + res.headers[header])
-    //             }
-    //           }
-    //           console.log('\nJSON Response:\n')
-    //           console.dir(JSON.parse(body), { colors: false, depth: null })
-    //         })
-    //         res.on('error', e => {
-    //           console.log('Error: ' + e.message)
-    //           throw e
-    //         })
-    //       })
-
-
-    //     })
-    // },
+                        console.log('body:', responses.join());
+                        // res.send(responses.join());
+                        result.push(responses);
+                    } 
+                })
+                res.on('error', e => {
+                    console.log('Error: ' + e.message)
+                    throw e
+                })
+            })
+        })
+        console.log(result);
+        res.json(result);
+    },
     key_phrase: function(req, res, str){
         let response_handler = function (response) {
             let body = '';
@@ -110,7 +118,8 @@ module.exports = {
                 body__ = JSON.parse (body__);
                 console.log (body__);
                 console.log(body__['documents'][0]['keyPhrases']);
-                res.send(body__['documents'][0]['keyPhrases']);
+                module.exports.bingsearchloop(req,res,body__['documents'][0]['keyPhrases']);
+
             });
             response.on ('error', function (e) {
                 console.log ('Error: ' + e.message);
