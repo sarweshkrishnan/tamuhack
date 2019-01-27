@@ -5,6 +5,7 @@ let multer = require('multer');
 const cognitiveApi = require('./api/cognitiveApi.js');
 const bingApi = require('./api/bingApi');
 const oxfordApi = require('./api/oxfordApi');
+const arxivApi = require('./api/arxivApi');
 
 let upload = multer({ dest: 'images/'});
 
@@ -22,6 +23,8 @@ app.post('/api/getKeyPhrases', upload.single('image'), cognitiveApi.ocr);
 app.get('/api/getMeanings', oxfordApi.getMeanings)
 
 app.get('/api/getBingSearch', bingApi.bingsearchloop);
+
+app.get('/api/getDocuments', arxivApi.getDocs);
 
 app.get('*', function(req, res) {
     res.sendFile(distDir + '/index.html');

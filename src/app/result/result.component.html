@@ -3,13 +3,15 @@
         <div class="panel panel-default">
           <div class="panel-heading">
             <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" class="panel-title">
-              <div>Bing Search</div>
+              <div>Journal References</div>
             </a>
           </div>
       
-          <div id="collapseOne" class="panel-collapse collapse">
+          <div id="collapseOne" class="panel-collapse">
             <div class="panel-body">
-              
+                <div *ngFor="let paper of papers" class="word-container">
+                    <a [href]="paper.url"><i>{{paper.summary | slice:0:100}} - {{paper.url}}</i></a>
+                </div>
             </div>
           </div>
         </div>
@@ -17,15 +19,15 @@
         <div class="panel panel-default">
             <div class="panel-heading">
               <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" class="panel-title">
-                <div>What is HTML? </div>
+                <div>Bing Search </div>
               </a>
             </div>
         
             <div id="collapseTwo" class="panel-collapse collapse">
               <div class="panel-body">
-        
-                <p>HTML stands for HyperText Markup Language. HTML is the standard markup language for describing the structure
-                  of web pages. <a href="https://www.tutorialrepublic.com/html-tutorial/" target="_blank">Learn more.</a></p>
+                <div *ngFor="let search of searches" class="word-container">
+                    <a [href]="search.url"><i>{{search.snippet | slice:0:80}} - {{search.url}}</i></a>
+                </div>
               </div>
             </div>
           </div>
@@ -37,7 +39,7 @@
                 </a>
               </div>
           
-              <div id="collapseThree" class="panel-collapse">
+              <div id="collapseThree" class="panel-collapse collapse">
                 <div class="panel-body">
                   <div *ngFor="let phrase of keyPhrases" class="word-container">
                       <div class="word-title">{{phrase.word}}</div>

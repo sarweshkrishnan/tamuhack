@@ -109,9 +109,9 @@ module.exports = {
               return;
             }
             let jsonResponse = JSON.stringify(JSON.parse(body), null, '  ');
-            
+            //console.log('JSON Response: ' + jsonResponse +'\n');
             jsonResponse = JSON.parse(jsonResponse)
-            // console.log('JSON Response: ' + jsonResponse +'\n');
+             
             try {
               for(var i = 0; i < jsonResponse.regions[0].lines.length; i++)
               {

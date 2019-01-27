@@ -19,35 +19,40 @@
 }
 .panel-heading
 {
-    background-color: #a0a0a0;
+    background-color: #909090;
     font-family: "Raleway";
+
+    transition: color 0.5s;
 }
 
 .panel-heading > a
 {
-    color: #484848;
+    color: #d0d0d0;
     text-decoration: none;
-    outline: 0;
-
-    transition: color 0.2s;
+    outline: none;
+    transition: color 0.5s;
 }
 .panel-heading > a:hover
 {
-    color: #303030;
+    color: #ffcc00;
 }
 
 .panel-body
 {
     border: 0px;
-    background-color: #b8b8b8;
-    color: #484848;
+    background-color: #c0c0c0;
+    font-family: "Source Sans Pro";
 }
 
 .word-container
 {
     margin-bottom: 20px;
-    font-family: "Source Sans Pro";
 }
+.word-container > a
+{
+    color: #606060;
+}
+
 .word-title
 {
     text-transform: uppercase;

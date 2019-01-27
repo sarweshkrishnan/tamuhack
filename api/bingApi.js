@@ -32,7 +32,7 @@ module.exports = {
                     let jsonResponse = JSON.stringify(JSON.parse(body), null, '  ');
                     jsonResponse = JSON.parse(jsonResponse);
                     
-                    result.push({"word": str, "search_list": jsonResponse});
+                    result.push({"snippet": jsonResponse.webPages.value[0].snippet, "url": jsonResponse.webPages.value[0].url});
                 }
                 catch(err)
                 {

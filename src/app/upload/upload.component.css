@@ -14,7 +14,7 @@
     font-family: 'Source Sans Pro';
     text-align: center;
     
-    border: 2px dashed #606060;
+    border: 3px dashed #909090;
 
     overflow-y: auto;
 }
@@ -29,4 +29,11 @@
     padding: 2% 0%;
     width: 100%;
     height: auto;
+}
+
+.btn
+{
+    color: #ffdc00;
+    background: #909090;
+    border: none;
 }
