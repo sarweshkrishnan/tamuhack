@@ -11,15 +11,21 @@ app.use(express.static(distDir));
 
 app.get('/api/test', function(req, res) {
     
-    // console.log(req.query.url != null) 
-
     // Replace <Subscription Key> with your valid subscription key.
     const subscriptionKey = '8d638ec7c9734f5e8196aace92c8bfa2';
     const uriBase =
     'https://westcentralus.api.cognitive.microsoft.com/vision/v2.0/ocr';
 
-    const imageUrl = 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/af/' +
-    'Atomist_quote_from_Democritus.png/338px-Atomist_quote_from_Democritus.png';
+    // const imageUrl = 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/af/' +
+    // 'Atomist_quote_from_Democritus.png/338px-Atomist_quote_from_Democritus.png';
+
+    const imageUrl = req.query.url+'';
+    console.log(imageUrl);
+
+    if(imageUrl === undefined || imageUrl == ''){
+      res.send("No URL.");
+      return;
+    }
 
     // Request parameters.
     const params = {
@@ -37,6 +43,7 @@ app.get('/api/test', function(req, res) {
         }
     };
 
+    let concatenate_str = '';
     request.post(options, (error, response, body) => {
       if (error) {
         console.log('Error: ', error);
@@ -46,16 +53,23 @@ app.get('/api/test', function(req, res) {
       console.log('JSON Response\n');
       jsonResponse = JSON.parse(jsonResponse)
 
-      for(var i = 0; i < jsonResponse.regions[0].lines.length; i++)
-      {   var words = jsonResponse.regions[0].lines[i].words;
-          for(var j = 0; j < words.length; j++){
-            console.log("text: " + words[j].text);
-          }
+      try{
+        for(var i = 0; i < jsonResponse.regions[0].lines.length; i++)
+        {   var words = jsonResponse.regions[0].lines[i].words;
+            for(var j = 0; j < words.length; j++){
+              concatenate_str+=words[j].text+' ';
+              // console.log("text: " + words[j].text);
+            }
+        }
+      }
+      catch(e){
+        res.send("Invalid Url.");
+        return;
       }
 
+      res.send(concatenate_str);
     });
-
-    res.send("This is a test");
+   
 });
 
 app.get('/api/test2', function(req, res) {
