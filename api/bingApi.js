@@ -43,6 +43,10 @@ module.exports = {
                 if(i == str_arr.length)
                 {
                     console.log(result);
+                    // for(var i = 0;i<result.length;i++){
+
+                    // }
+
                     res.json(result);
                 }
             });
