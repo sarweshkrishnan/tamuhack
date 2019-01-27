@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 import { CognitiveService } from '../cognitive.service';
+import { OxfordService } from '../oxford.service';
 
 @Component({
   selector: 'app-result',
@@ -10,19 +11,22 @@ import { CognitiveService } from '../cognitive.service';
 export class ResultComponent implements OnInit {
   keyPhrases;
 
-  constructor(private cgService: CognitiveService) { }
+  constructor(private cgService: CognitiveService, private oxService: OxfordService) { }
 
   ngOnInit() {
     this.cgService.currentMessage.subscribe(keyPhrases => 
-      {
-        this.keyPhrases = keyPhrases;
-        
+      {       
         this.cgService.getBingResults(keyPhrases)
         .subscribe(
           searches => {
               console.log(searches);
           }
         );
+
+        this.oxService.getMeanings(keyPhrases)
+        .subscribe(res => {
+          this.keyPhrases = res;
+        });
       });
   }
 

@@ -4,6 +4,7 @@ let multer = require('multer');
 
 const cognitiveApi = require('./api/cognitiveApi.js');
 const bingApi = require('./api/bingApi');
+const oxfordApi = require('./api/oxfordApi');
 
 let upload = multer({ dest: 'images/'});
 
@@ -17,6 +18,8 @@ var distDir = __dirname + "/dist/tamuhack";
 app.use(express.static(distDir));
 
 app.post('/api/getKeyPhrases', upload.single('image'), cognitiveApi.ocr);
+
+app.get('/api/getMeanings', oxfordApi.getMeanings)
 
 app.get('/api/getBingSearch', bingApi.bingsearchloop);
 

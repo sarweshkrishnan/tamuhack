@@ -9,9 +9,7 @@
       
           <div id="collapseOne" class="panel-collapse collapse">
             <div class="panel-body">
-              <div *ngFor="let phrase of keyPhrases">
-                {{phrase}}
-              </div>
+              
             </div>
           </div>
         </div>
@@ -34,16 +32,17 @@
       
           <div class="panel panel-default">
               <div class="panel-heading">
-                <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree" class="panel-title">
-                  <div>1. What is HTML? </div>
+                <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree" class="panel-title" style="text-decoration: none;">
+                  <div>Key Phrases</div>
                 </a>
               </div>
           
-              <div id="collapseThree" class="panel-collapse collapse">
+              <div id="collapseThree" class="panel-collapse">
                 <div class="panel-body">
-          
-                  <p>HTML stands for HyperText Markup Language. HTML is the standard markup language for describing the structure
-                    of web pages. <a href="https://www.tutorialrepublic.com/html-tutorial/" target="_blank">Learn more.</a></p>
+                  <div *ngFor="let phrase of keyPhrases" class="word-container">
+                      <div class="word-title">{{phrase.word}}</div>
+                      <div class="word-meaning">{{phrase.meaning}}</div>
+                  </div>
                 </div>
               </div>
             </div>
