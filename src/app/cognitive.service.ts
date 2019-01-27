@@ -13,9 +13,14 @@ export class CognitiveService {
 
   getKeyPhrases(formData: FormData)
   {
-    return this.http.post('/api/test', formData).subscribe(res => {
+    return this.http.post('/api/getKeyPhrases', formData).subscribe(res => {
       this.messageSource.next(res);
     })
+  }
+
+  getBingResults(keyPhrases)
+  {
+    return this.http.get('/api/getBingSearch?keyPhrases=' + keyPhrases);
   }
   
 }

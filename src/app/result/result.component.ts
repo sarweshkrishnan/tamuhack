@@ -13,10 +13,16 @@ export class ResultComponent implements OnInit {
   constructor(private cgService: CognitiveService) { }
 
   ngOnInit() {
-    this.cgService.currentMessage.subscribe(message => 
+    this.cgService.currentMessage.subscribe(keyPhrases => 
       {
-        this.keyPhrases = message;
-        console.log(message);
+        this.keyPhrases = keyPhrases;
+        
+        this.cgService.getBingResults(keyPhrases)
+        .subscribe(
+          searches => {
+              console.log(searches);
+          }
+        );
       });
   }
 

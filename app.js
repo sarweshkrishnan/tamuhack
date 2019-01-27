@@ -3,6 +3,8 @@ var bodyParser = require("body-parser");
 let multer = require('multer');
 
 const cognitiveApi = require('./api/cognitiveApi.js');
+const bingApi = require('./api/bingApi');
+
 let upload = multer({ dest: 'images/'});
 
 var app = express();
@@ -14,11 +16,9 @@ app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
 var distDir = __dirname + "/dist/tamuhack";
 app.use(express.static(distDir));
 
-app.get('/images/:id', function(req, res) {
-  res.sendFile(__dirname + "/images/" + req.params.id);
-});
+app.post('/api/getKeyPhrases', upload.single('image'), cognitiveApi.ocr);
 
-app.post('/api/test', upload.single('image'), cognitiveApi.ocr);
+app.get('/api/getBingSearch', bingApi.bingsearchloop);
 
 app.get('*', function(req, res) {
     res.sendFile(distDir + '/index.html');
@@ -29,3 +29,7 @@ var server = app.listen(process.env.PORT || 3000, function () {
     var port = server.address().port;
     console.log("App now running on port", port);
 });
+
+// app.get('/images/:id', function(req, res) {
+//   res.sendFile(__dirname + "/images/" + req.params.id);
+// });
