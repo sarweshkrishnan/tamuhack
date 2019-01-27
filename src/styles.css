@@ -4,13 +4,3 @@ html
     line-height: 19px;
     background: #bbbbbb;
 }
-
-.inner-container
-{
-    position: absolute;
-
-    width: 50%;
-    height: 93%;
-
-    padding: 1%;
-}

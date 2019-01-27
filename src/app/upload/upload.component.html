@@ -1,8 +1,8 @@
-<div class="inner-container">
+<div class="left-container col-xs-7">
   <div class="preview">
-    <input type="file" (change)="onFileUpload($event);" class="btn-file"/>
-
-    <img [src]="url" accept="image/*" alt="Preview your image here!" />
+    <input type="file" class="btn btn-primary" (change)="onFileUpload($event);">
+         
+    <img [src]="url" accept="image/*" alt="" />
   </div>
   
 </div>
