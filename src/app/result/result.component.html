@@ -1,17 +1,17 @@
-<div class="right-container col-xs-5">
+<div class="right-container col-xs-4">
     <div id="accordion" class="panel-group">
         <div class="panel panel-default">
           <div class="panel-heading">
             <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" class="panel-title">
-              <div>1. What is HTML? </div>
+              <div>KEY PHRASES</div>
             </a>
           </div>
       
           <div id="collapseOne" class="panel-collapse collapse">
             <div class="panel-body">
-      
-              <p>HTML stands for HyperText Markup Language. HTML is the standard markup language for describing the structure
-                of web pages. <a href="https://www.tutorialrepublic.com/html-tutorial/" target="_blank">Learn more.</a></p>
+              <div *ngFor="let phrase of keyPhrases">
+                {{phrase}}
+              </div>
             </div>
           </div>
         </div>

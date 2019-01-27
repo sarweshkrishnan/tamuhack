@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+
+import { CognitiveService } from '../cognitive.service';
 
 @Component({
   selector: 'app-upload',
@@ -10,7 +11,7 @@ export class UploadComponent {
   url: string;
   selectedFile: File;
 
-  constructor(private http: HttpClient) { }
+  constructor(private cgService: CognitiveService) { }
 
   onFileUpload(event:any) {
     if (event.target.files && event.target.files[0]) {
@@ -22,14 +23,11 @@ export class UploadComponent {
         reader.onload = (event:any) => {
             this.url = event.target.result;
         }
-        
-        console.log(this.selectedFile);
 
         let formData = new FormData();
         formData.append('image', this.selectedFile);
 
-        this.http.post('/api/test', formData)
-        .subscribe();
+        this.cgService.getKeyPhrases(formData);
     }
 }
 

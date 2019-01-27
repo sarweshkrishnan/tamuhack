@@ -2,6 +2,8 @@ const fs = require('fs');
 const request = require('request');
 let https = require ('https');
 
+let oxfordApi = require('./oxfordApi');
+
 // Replace <Subscription Key> with your valid subscription key.
 const subscriptionKey = '8d638ec7c9734f5e8196aace92c8bfa2', 
       uriBase = 'https://westcentralus.api.cognitive.microsoft.com/vision/v2.0/ocr';
@@ -110,7 +112,7 @@ module.exports = {
                 body__ = JSON.parse (body__);
                 console.log (body__);
                 console.log(body__['documents'][0]['keyPhrases']);
-                res.send(body__['documents'][0]['keyPhrases']);
+                res.json(body__['documents'][0]['keyPhrases']);
             });
             response.on ('error', function (e) {
                 console.log ('Error: ' + e.message);
