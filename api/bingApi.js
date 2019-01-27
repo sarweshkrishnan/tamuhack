@@ -31,8 +31,12 @@ module.exports = {
                 try{
                     let jsonResponse = JSON.stringify(JSON.parse(body), null, '  ');
                     jsonResponse = JSON.parse(jsonResponse);
-                    
-                    result.push({"word": str, "search_list": jsonResponse});
+                    console.log()
+
+                    if(jsonResponse.webPages.value[0].deepLinks!=undefined){
+                        result.push({"word": str, "search_list": jsonResponse.webPages.value[0].deepLinks});
+                    }
+
                 }
                 catch(err)
                 {
@@ -43,6 +47,10 @@ module.exports = {
                 if(i == str_arr.length)
                 {
                     console.log(result);
+                    // for(var i = 0;i<result.length;i++){
+
+                    // }
+
                     res.json(result);
                 }
             });

@@ -41,8 +41,9 @@ module.exports = {
                 
                 //return success here
                 body__ = JSON.parse (body__);
+                console.log("HERE-----------------------------------------");
                 console.log (body__);
-                console.log(body__['documents'][0]['keyPhrases']);
+                // console.log(body__['documents'][0]['keyPhrases']);
 
                 res.json(body__['documents'][0]['keyPhrases']);
                 //module.exports.bingsearchloop(req,res,body__['documents'][0]['keyPhrases']);
