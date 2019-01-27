@@ -1,6 +1,6 @@
 <div class="inner-container">
   <div class="preview">
-    <input type="file" (change)="readURL($event);" class="btn-file"/>
+    <input type="file" (change)="onFileUpload($event);" class="btn-file"/>
 
     <img [src]="url" accept="image/*" alt="Preview your image here!" />
   </div>

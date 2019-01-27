@@ -1,18 +1,39 @@
 var express = require("express");
 var bodyParser = require("body-parser");
+var fs = require('fs');
+
+let multer = require('multer');
+let upload = multer({ dest: 'images/'});
 
 var app = express();
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
+  extended: true
+}));
 
 var distDir = __dirname + "/dist/tamuhack";
 app.use(express.static(distDir));
+//app.use(express.static(__dirname + "/images"));
 
-app.get('/api/test', function(req, res) {
-    res.send("This is a test ");
+app.post('/api/test',  upload.single('image'), function(req, res) {
+    var tmp_path = req.file.path;
+    var target_path = 'images/' + req.file.originalname;
+
+    var src = fs.createReadStream(tmp_path);
+    var dest = fs.createWriteStream(target_path);
+    src.pipe(dest);
+
+    src.on('end', function() { res.sendStatus(200); });
+    src.on('error', function(err) { res.sendStatus(500) }); 
+    
+});
+
+app.get('/image/:id', function(req, res) {
+  res.sendFile(__dirname + "/images/" + req.params.id);
 });
 
 app.get('*', function(req, res) {
-    res.sendfile(distDir + '/index.html');
+    res.sendFile(distDir + '/index.html');
 });
 
 // Initialize the app.
