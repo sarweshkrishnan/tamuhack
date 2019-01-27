@@ -44,8 +44,14 @@ module.exports = {
                 console.log("HERE-----------------------------------------");
                 console.log (body__);
                 // console.log(body__['documents'][0]['keyPhrases']);
-
-                res.json(body__['documents'][0]['keyPhrases']);
+                
+                final = []
+                body__['documents'].forEach(doc => {
+                    doc.keyPhrases.forEach( phrase => {
+                        final.push(phrase)
+                    });
+                })
+                res.json(final);
                 //module.exports.bingsearchloop(req,res,body__['documents'][0]['keyPhrases']);
 
             });
@@ -70,10 +76,14 @@ module.exports = {
             req.write (body);
             req.end ();
         }
-  
-        let documents = { 'documents': [
-            { 'id': '1', 'language': 'en', 'text': str+'' },
-        ]};
+        
+        doc = []
+        for(let i = 1; i <= str.length; i++)
+        {
+            doc.push({'id': i, 'language': 'en', 'text': str[i]})
+        }
+
+        let documents = { 'documents': doc};
   
         get_key_phrases (documents);
       },
@@ -103,7 +113,7 @@ module.exports = {
               body: fs.readFileSync(target_path)
           };
     
-          let concatenate_str = '';
+          
           request.post(options, (error, response, body) => {
             if (error) {
               console.log('Error: ', error);
@@ -111,28 +121,28 @@ module.exports = {
             }
             let jsonResponse = JSON.stringify(JSON.parse(body), null, '  ');
             //console.log('JSON Response: ' + jsonResponse +'\n');
-            jsonResponse = JSON.parse(jsonResponse)
-             
-            try {
-              for(var i = 0; i < jsonResponse.regions[0].lines.length; i++)
-              {
-                  var words = jsonResponse.regions[0].lines[i].words;
-                  for(var j = 0; j < words.length; j++)
-                  {
-                    concatenate_str += words[j].text+' ';
-                    // console.log("text: " + words[j].text);
-                  }
-              }
+            jsonResponse = JSON.parse(jsonResponse);
+            
+            let result = [];
 
-            }
+            try {
+                jsonResponse.regions.forEach(region => {
+                    region.lines.forEach(line => {
+                        let concatenate_str = '';
+                        line.words.forEach(word => {
+                            concatenate_str += word.text +' ';
+                        });
+                        result.push(concatenate_str);
+                    });
+                });
+y            }
             catch(e){
-              res.send("Invalid Url.");
-              return;
+              
             }
             // console.log(concatenate_str);
 
-            module.exports.key_phrase(req,res,concatenate_str);
-            // res.sendStatus(200);
+            module.exports.key_phrase(req,res, result);
+             //res.send(result);
           });
         });
     

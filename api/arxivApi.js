@@ -8,6 +8,10 @@ module.exports = {
         var str_arr = req.query.keyPhrases;
         str_arr = str_arr.split(',');
 
+        str_arr.filter(function(elem, pos) {
+            return str_arr.indexOf(elem) == pos;
+        });
+
         let result = [];
         let i = 0;
 

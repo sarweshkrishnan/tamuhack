@@ -6,7 +6,7 @@ import { BehaviorSubject } from 'rxjs';
   providedIn: 'root'
 })
 export class CognitiveService {
-  private messageSource = new BehaviorSubject<Object>('default message');
+  private messageSource = new BehaviorSubject<Object>('');
   currentMessage = this.messageSource.asObservable();
 
   constructor(private http: HttpClient) { }
