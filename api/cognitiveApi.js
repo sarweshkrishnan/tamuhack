@@ -5,14 +5,14 @@ let https = require ('https');
 let oxfordApi = require('./oxfordApi');
 
 // Replace <Subscription Key> with your valid subscription key.
-const subscriptionKey = '8d638ec7c9734f5e8196aace92c8bfa2', 
+const subscriptionKey = '575e1888820e4088b1a37a12fe7222cf', 
       uriBase = 'https://westcentralus.api.cognitive.microsoft.com/vision/v2.0/ocr';
 
 //if success proceed to text analytics
 // text analytics starts here ---------------------------------------------------------------------------------------------------------------------
 
 // Replace the accessKey string value with your valid access key.
-let accessKey = '194b6f78567c46d4847677737b54c25d';
+let accessKey = '575e1888820e4088b1a37a12fe7222cf';
 
 // Replace or verify the region.
 
@@ -24,9 +24,6 @@ let accessKey = '194b6f78567c46d4847677737b54c25d';
 // a free trial access key, you should not need to change this region.
 let uri = 'westcentralus.api.cognitive.microsoft.com';
 let path = '/text/analytics/v2.0/keyPhrases';
-
-
-let SUBSCRIPTION_WEBSEARCH_KEY = '1765443c4eb3423dad32655c6fe7250b';
 
 module.exports = {
     key_phrase: function(req, res, str){
