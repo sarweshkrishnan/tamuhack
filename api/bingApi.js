@@ -21,7 +21,7 @@ module.exports = {
 
         str_arr.forEach(function(str) {
             let options = {
-                url : "https://api.cognitive.microsoft.com/bing/v7.0/search?q=" + encodeURIComponent(str),
+                url : "https://westcentralus.api.cognitive.microsoft.com/bing/v7.0/search?q=" + encodeURIComponent(str),
                 headers:  { 'Ocp-Apim-Subscription-Key': SUBSCRIPTION_WEBSEARCH_KEY },
             };
 
