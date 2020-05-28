@@ -24,7 +24,7 @@
     "core-js": "^2.5.4",
     "express": "^4.16.4",
     "fs": "0.0.1-security",
-    "jquery": "^3.3.1",
+    "jquery": "^3.5.0",
     "multer": "^1.4.1",
     "normalize.css": "^8.0.1",
     "request": "^2.88.0",
