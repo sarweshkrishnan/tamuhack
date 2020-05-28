@@ -1,7 +1,7 @@
 let https = require ('https');
 const request = require('request');
 
-let SUBSCRIPTION_WEBSEARCH_KEY = '1765443c4eb3423dad32655c6fe7250b';
+let SUBSCRIPTION_WEBSEARCH_KEY = '575e1888820e4088b1a37a12fe7222cf';
 
 let bingsearchresults = [];
 let i = 0;
